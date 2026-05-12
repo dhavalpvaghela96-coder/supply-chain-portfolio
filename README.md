@@ -4,7 +4,7 @@ Supply chain and production planning analyses using real Canadian industry data.
 
 ---
 
-### Simulation 4 – Canadian Fabricated Metal Manufacturing
+### Simulation 1 – Canadian Fabricated Metal Manufacturing
 **Focus:** Post-COVID demand analysis and production planning implications  
 **Data:** Statistics Canada, NAICS 332, 2015–2025  
 **Tools:** Excel, Statistics Canada open data  
