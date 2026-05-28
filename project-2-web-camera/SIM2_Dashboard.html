@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Web Camera Inventory Analysis – Dhaval Vaghela</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap');
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'DM Sans',sans-serif;background:#0a0f1e;color:#e2e8f0;min-height:100vh}
+  .header{background:linear-gradient(135deg,#0f172a 0%,#1e293b 50%,#0f172a 100%);border-bottom:1px solid #1e3a5f;padding:28px 48px 20px;position:relative;overflow:hidden}
+  .header::after{content:'';position:absolute;top:0;right:0;width:400px;height:200px;background:radial-gradient(ellipse at top right,rgba(59,130,246,0.12) 0%,transparent 70%);pointer-events:none}
+  .header-top{display:flex;justify-content:space-between;align-items:flex-start}
+  .badge{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+  .badge-bar{width:4px;height:28px;background:#3b82f6;border-radius:2px}
+  .badge-text{font-size:10px;letter-spacing:.15em;color:#3b82f6;font-weight:700;text-transform:uppercase}
+  h1{font-size:24px;font-weight:800;letter-spacing:-.02em;color:#f1f5f9;margin-bottom:4px}
+  .subtitle{font-size:13px;color:#64748b}
+  .author{text-align:right}
+  .author-label{font-size:10px;color:#475569;text-transform:uppercase;letter-spacing:.08em}
+  .author-name{font-size:15px;font-weight:700;color:#94a3b8}
+  .author-sub{font-size:11px;color:#475569}
+  nav{display:flex;gap:4px;margin-top:20px;flex-wrap:wrap}
+  .nav-btn{background:transparent;border:1px solid #1e3a5f;color:#64748b;border-radius:6px;padding:5px 14px;font-size:12px;font-weight:500;cursor:pointer;transition:all .15s;font-family:'DM Sans',sans-serif}
+  .nav-btn.active{background:#3b82f6;border-color:#3b82f6;color:#fff;font-weight:700}
+  .main{padding:24px 48px;max-width:1200px;margin:0 auto}
+  .section{display:none}
+  .section.active{display:block}
+  .kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px}
+  .kpi{background:#0f172a;border:1px solid #1e293b;border-radius:10px;padding:18px 16px 14px}
+  .kpi-label{font-size:10px;color:#475569;text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px}
+  .kpi-value{font-size:26px;font-weight:800;letter-spacing:-.02em}
+  .kpi-sub{font-size:11px;color:#475569;margin-top:3px}
+  .card{background:#0f172a;border:1px solid #1e293b;border-radius:12px;padding:24px;margin-bottom:20px}
+  .card-title{font-size:10px;text-transform:uppercase;letter-spacing:.12em;font-weight:700;margin-bottom:12px}
+  .card p{font-size:13px;line-height:1.8;color:#94a3b8}
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+  table{width:100%;border-collapse:collapse;font-size:12px}
+  th{padding:9px 12px;text-align:center;color:#94a3b8;font-weight:600;font-size:10px;letter-spacing:.06em;background:#1e3a5f}
+  td{padding:9px 12px;text-align:center;border-bottom:1px solid #1e293b}
+  tr:nth-child(even) td{background:#111827}
+  tr:nth-child(odd) td{background:#0f172a}
+  .root-item{display:flex;gap:10px;margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid #1e293b}
+  .root-item:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+  .root-num{min-width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0}
+  .dmaic-steps{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:24px}
+  .dmaic-step{background:#0f172a;border:1px solid #1e293b;border-radius:10px;padding:16px;text-align:center}
+  .dmaic-letter{font-size:28px;font-weight:800;margin-bottom:6px}
+  .dmaic-name{font-size:11px;color:#94a3b8;font-weight:600;margin-bottom:4px}
+  .dmaic-desc{font-size:10px;color:#475569;line-height:1.5}
+  .conclusion{background:linear-gradient(135deg,#1e3a5f 0%,#0f172a 100%);border:1px solid #1e3a5f;border-radius:12px;padding:24px}
+  .footer-line{margin-top:16px;padding-top:12px;border-top:1px solid #1e3a5f;font-size:10px;color:#475569}
+  canvas{max-height:240px}
+  .highlight{color:#f1f5f9;font-weight:700}
+  .hl-green{color:#22c55e;font-weight:700}
+  .hl-yellow{color:#f59e0b;font-weight:700}
+  .hl-red{color:#ef4444;font-weight:700}
+  .status-badge{display:inline-block;padding:2px 8px;border-radius:4px;font-size:10px;font-weight:700}
+  .status-available{background:#22c55e1a;color:#22c55e;border:1px solid #22c55e40}
+  .status-missing{background:#ef44441a;color:#ef4444;border:1px solid #ef444440}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-top">
+    <div>
+      <div class="badge"><div class="badge-bar"></div><span class="badge-text">DMAIC Inventory Analysis</span></div>
+      <h1>Web Camera Inventory Analysis - Finding the Root Cause</h1>
+      <p class="subtitle">ABC Classification and Root Cause Analysis, DataCo Dataset 2015 to 2018</p>
+    </div>
+    <div class="author">
+      <div class="author-label">Prepared by</div>
+      <div class="author-name">Dhaval Vaghela</div>
+      <div class="author-sub">May 2026</div>
+    </div>
+  </div>
+  <nav>
+    <button class="nav-btn active" onclick="showSection('overview',this)">Overview</button>
+    <button class="nav-btn" onclick="showSection('define',this)">Define</button>
+    <button class="nav-btn" onclick="showSection('measure',this)">Measure</button>
+    <button class="nav-btn" onclick="showSection('analyze',this)">Analyze</button>
+    <button class="nav-btn" onclick="showSection('improve',this)">Improve & Control</button>
+  </nav>
+</div>
+
+<div class="main">
+
+  <!-- OVERVIEW -->
+  <div id="overview" class="section active">
+    <div class="kpi-grid">
+      <div class="kpi" style="border-top:3px solid #ef4444">
+        <div class="kpi-label">Web Camera Late Delivery Risk</div>
+        <div class="kpi-value" style="color:#ef4444">58%</div>
+        <div class="kpi-sub">of camera orders at risk</div>
+      </div>
+      <div class="kpi" style="border-top:3px solid #f59e0b">
+        <div class="kpi-label">Web Camera Revenue</div>
+        <div class="kpi-value" style="color:#f59e0b">$240K</div>
+        <div class="kpi-sub">Highest among top 5 risk products</div>
+      </div>
+      <div class="kpi" style="border-top:3px solid #3b82f6">
+        <div class="kpi-label">ABC Classification</div>
+        <div class="kpi-value" style="color:#3b82f6">B Item</div>
+        <div class="kpi-sub">Mid-priority, high risk</div>
+      </div>
+      <div class="kpi" style="border-top:3px solid #22c55e">
+        <div class="kpi-label">Avg Daily Demand</div>
+        <div class="kpi-value" style="color:#22c55e">0.53</div>
+        <div class="kpi-sub">Units per day over 1,126 days</div>
+      </div>
+    </div>
+
+    <div class="dmaic-steps">
+      <div class="dmaic-step" style="border-top:3px solid #3b82f6">
+        <div class="dmaic-letter" style="color:#3b82f6">D</div>
+        <div class="dmaic-name">Define</div>
+        <div class="dmaic-desc">Identified Web Camera as highest revenue product among top 5 late delivery risk categories</div>
+      </div>
+      <div class="dmaic-step" style="border-top:3px solid #22c55e">
+        <div class="dmaic-letter" style="color:#22c55e">M</div>
+        <div class="dmaic-name">Measure</div>
+        <div class="dmaic-desc">ABC classification of 118 products. 7 A items drive 76.87% of revenue. Camera is a B item.</div>
+      </div>
+      <div class="dmaic-step" style="border-top:3px solid #f59e0b">
+        <div class="dmaic-letter" style="color:#f59e0b">A</div>
+        <div class="dmaic-name">Analyze</div>
+        <div class="dmaic-desc">Ishikawa diagram mapped 12 root causes. Primary cause: no reorder point set for camera SKU.</div>
+      </div>
+      <div class="dmaic-step" style="border-top:3px solid #ef4444">
+        <div class="dmaic-letter" style="color:#ef4444">I</div>
+        <div class="dmaic-name">Improve</div>
+        <div class="dmaic-desc">Calculated avg daily demand at 0.53 units/day. Reorder point framework built.</div>
+      </div>
+      <div class="dmaic-step" style="border-top:3px solid #a855f7">
+        <div class="dmaic-letter" style="color:#a855f7">C</div>
+        <div class="dmaic-name">Control</div>
+        <div class="dmaic-desc">Weekly stock checks. Target: reduce late delivery from 58% to below 20% in 6 months.</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title" style="color:#3b82f6">Summary</div>
+      <p>This simulation used DMAIC to find out why Web Camera has a <span class="hl-red">58% late delivery risk</span>. Through ABC classification and root cause analysis I found that the absence of a reorder point, combined with long supplier lead times, is causing stock to run out before anyone notices. Web Camera is a <span class="hl-yellow">B item contributing $240,496 in revenue</span> but carrying a disproportionately high delivery risk. The root cause is no reorder point set for this SKU, meaning stock runs out with no trigger to reorder.</p>
+    </div>
+  </div>
+
+  <!-- DEFINE -->
+  <div id="define" class="section">
+    <div class="card" style="border-top:3px solid #3b82f6">
+      <div class="card-title" style="color:#3b82f6">Problem Statement</div>
+      <p>Looking at 50 product categories in this dataset, the Camera category stands out as the biggest business risk. It has the highest revenue at stake at $240,500 and a late delivery risk score of 0.58, which puts it in the top 5 across all categories. Golf Bags and Carts has a higher risk score at 0.69 but only $9,400 in revenue, so it is a much smaller problem for the business. This analysis focuses on Web Camera because reducing late delivery risk there protects the most revenue.</p>
+    </div>
+    <div class="card">
+      <div class="card-title" style="color:#3b82f6">Late Delivery Risk by Category, Top 10</div>
+      <canvas id="riskChart"></canvas>
+    </div>
+    <div class="card">
+      <div class="card-title" style="color:#3b82f6">SIPOC Diagram</div>
+      <table>
+        <thead><tr><th>Supplier</th><th>Input</th><th>Process</th><th>Output</th><th>Customer</th></tr></thead>
+        <tbody>
+          <tr><td style="font-weight:700;color:#e2e8f0">Camera manufacturers</td><td>Camera stock and inventory</td><td style="text-align:left">1. Retailer places purchase order</td><td>Delivered camera orders</td><td>Retail stores</td></tr>
+          <tr><td></td><td>Purchase orders from retailers</td><td style="text-align:left">2. Warehouse receives and processes order</td><td>On-time delivery confirmation</td><td>Sports goods chains</td></tr>
+          <tr><td></td><td></td><td style="text-align:left">3. Pick and pack cameras from warehouse</td><td>Order fulfillment record</td><td>Online retailers</td></tr>
+          <tr><td></td><td></td><td style="text-align:left">4. Assign logistics partner and confirm delivery date</td><td></td><td></td></tr>
+          <tr><td></td><td></td><td style="text-align:left">5. Ship order to retailer</td><td></td><td></td></tr>
+          <tr><td></td><td></td><td style="text-align:left">6. Retailer receives order</td><td></td><td></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- MEASURE -->
+  <div id="measure" class="section">
+    <div class="card" style="border-top:3px solid #22c55e">
+      <div class="card-title" style="color:#22c55e">ABC Classification Results</div>
+      <p>Just <span class="hl-green">7 products drive 76.87% of total revenue</span>. Web Camera falls in the B category, meaning it is a mid-priority product yet it carries a 58% late delivery risk, which makes it a target for closer monitoring despite not being a top revenue driver.</p>
+    </div>
+    <div class="two-col">
+      <div class="card" style="margin-bottom:0">
+        <div class="card-title" style="color:#3b82f6">Revenue Distribution by ABC Category</div>
+        <canvas id="abcChart"></canvas>
+      </div>
+      <div class="card" style="margin-bottom:0">
+        <div class="card-title" style="color:#3b82f6">ABC Summary Table</div>
+        <table>
+          <thead><tr><th>Category</th><th>Products</th><th>Revenue</th><th>Revenue %</th><th>Priority</th></tr></thead>
+          <tbody>
+            <tr><td style="font-weight:800;color:#22c55e">A</td><td>7</td><td style="color:#22c55e">$25.4M</td><td style="color:#22c55e;font-weight:700">76.87%</td><td style="color:#22c55e">Highest</td></tr>
+            <tr><td style="font-weight:800;color:#f59e0b">B</td><td>16</td><td style="color:#f59e0b">$5.97M</td><td style="color:#f59e0b;font-weight:700">18.09%</td><td style="color:#f59e0b">Medium</td></tr>
+            <tr><td style="font-weight:800;color:#ef4444">C</td><td>95</td><td style="color:#ef4444">$1.66M</td><td style="color:#ef4444;font-weight:700">5.04%</td><td style="color:#ef4444">Lowest</td></tr>
+          </tbody>
+        </table>
+        <div style="margin-top:20px;padding:14px;background:#111827;border-radius:8px;border-left:3px solid #f59e0b">
+          <div style="font-size:11px;color:#f59e0b;font-weight:700;margin-bottom:6px">WEB CAMERA POSITION</div>
+          <div style="font-size:12px;color:#94a3b8">B Item, $240,496 revenue, 58% late delivery risk. Mid-priority product with disproportionately high delivery failure rate.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ANALYZE -->
+  <div id="analyze" class="section">
+    <div class="card" style="border-top:3px solid #f59e0b">
+      <div class="card-title" style="color:#f59e0b">Root Cause Summary</div>
+      <p>The main problem is that no one has set a reorder point for Web Camera. This means nobody gets a warning when stock is running low, orders keep coming in but there is nothing left to ship. On top of that, cameras are likely sourced from overseas suppliers which means it takes longer to restock. So even if a reorder point is set, if it does not account for that longer wait time, stockouts will still happen.</p>
+    </div>
+    <div class="card">
+      <div class="card-title" style="color:#3b82f6">Ishikawa Diagram, 6 Cause Categories</div>
+      <table>
+        <thead><tr><th style="width:20%">Cause Category</th><th>Possible Causes</th></tr></thead>
+        <tbody>
+          <tr><td style="font-weight:700;color:#3b82f6">People</td><td style="text-align:left">Staff not knowing exact warehouse location of camera SKU. No accountability system to track individual picker performance.</td></tr>
+          <tr><td style="font-weight:700;color:#3b82f6">Process</td><td style="text-align:left">No standard order assigning process. No priority system to flag high-risk B items like cameras.</td></tr>
+          <tr><td style="font-weight:700;color:#3b82f6">Machine</td><td style="text-align:left">Insufficient equipment per employee ratio slowing fulfillment. WMS not sending alerts when camera stock falls below safe level.</td></tr>
+          <tr><td style="font-weight:700;color:#3b82f6">Material</td><td style="text-align:left">Insufficient camera stock to meet order demand. Wrong items stored in camera location causing picking errors.</td></tr>
+          <tr><td style="font-weight:700;color:#ef4444">Measurement</td><td style="text-align:left;color:#ef4444;font-weight:600">No reorder points set for camera SKU. No tracking of late delivery rate by individual product. PRIMARY ROOT CAUSE.</td></tr>
+          <tr><td style="font-weight:700;color:#3b82f6">Environment</td><td style="text-align:left">Camera suppliers have longer lead times due to overseas sourcing. Supplier delays on camera replenishment orders.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- IMPROVE AND CONTROL -->
+  <div id="improve" class="section">
+    <div class="card" style="border-top:3px solid #ef4444">
+      <div class="card-title" style="color:#ef4444">Average Daily Demand Calculation</div>
+      <table>
+        <thead><tr><th>Metric</th><th>Value</th></tr></thead>
+        <tbody>
+          <tr><td style="font-weight:700;color:#e2e8f0">Earliest Order Date</td><td>January 2015</td></tr>
+          <tr><td style="font-weight:700;color:#e2e8f0">Latest Order Date</td><td>January 2018</td></tr>
+          <tr><td style="font-weight:700;color:#e2e8f0">Total Days</td><td>1,126 days</td></tr>
+          <tr><td style="font-weight:700;color:#e2e8f0">Total Units Sold</td><td>592 units</td></tr>
+          <tr><td style="font-weight:700;color:#22c55e">Average Daily Demand</td><td style="color:#22c55e;font-weight:700">0.53 units per day</td></tr>
+        </tbody>
+      </table>
+      <div style="margin-top:14px;font-size:13px;color:#94a3b8;line-height:1.7">This week I calculated that Web Camera sells on average 0.53 units per day over the dataset period. This is a low velocity product. Despite low velocity, the 58% late delivery risk indicates that even small stock fluctuations are enough to cause fulfillment failures.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title" style="color:#3b82f6">Reorder Point Framework</div>
+      <table>
+        <thead><tr><th>Input</th><th>Value</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td style="font-weight:700;color:#e2e8f0">Formula</td><td style="text-align:left">Reorder Point = Avg Daily Demand x Supplier Lead Time + Safety Stock</td><td></td></tr>
+          <tr><td style="font-weight:700;color:#e2e8f0">Avg Daily Demand</td><td style="color:#22c55e">0.53 units per day</td><td><span class="status-badge status-available">Available</span></td></tr>
+          <tr><td style="font-weight:700;color:#e2e8f0">Supplier Lead Time</td><td style="color:#ef4444">Not in dataset</td><td><span class="status-badge status-missing">Missing</span></td></tr>
+          <tr><td style="font-weight:700;color:#e2e8f0">Safety Stock</td><td style="color:#ef4444">Not in dataset</td><td><span class="status-badge status-missing">Missing</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="conclusion">
+      <div class="card-title" style="color:#a855f7;margin-bottom:10px">Control Metric</div>
+      <p style="font-size:13px;line-height:1.8;color:#94a3b8">Check Web Camera stock every week. The moment stock drops to the reorder point level, place a new order with the supplier immediately. Every month track how many camera orders were delivered late. Right now that number is 58%. The goal is to bring it below 20% within 6 months of setting the reorder point.</p>
+      <div class="footer-line">Data Source: DataCo Smart Supply Chain Dataset (Kaggle), Analysis Period: 2015 to 2018, Prepared: May 2026</div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+function showSection(id, btn) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+  setTimeout(() => initCharts(id), 50);
+}
+
+const charts = {};
+
+const chartDefaults = {
+  responsive: true, maintainAspectRatio: true,
+  plugins: { legend: { labels: { color: '#64748b', font: { family: 'DM Sans', size: 11 }, boxWidth: 12 } } },
+  scales: {
+    x: { ticks: { color: '#475569', font: { size: 10 } }, grid: { color: '#1e293b' } },
+    y: { ticks: { color: '#475569', font: { size: 10 } }, grid: { color: '#1e293b' } }
+  }
+};
+
+function initCharts(section) {
+  if (section === 'define' && !charts.risk) {
+    charts.risk = new Chart(document.getElementById('riskChart'), {
+      type: 'bar',
+      data: {
+        labels: ['Golf Bags', 'Lacrosse', 'Pet Supplies', 'Cameras', 'Strength Training', 'As Seen on TV', 'Music', 'Accessories', 'Fitness Acc.', 'Books'],
+        datasets: [
+          { label: 'Late Delivery Risk', data: [0.689, 0.601, 0.589, 0.581, 0.577, 0.574, 0.571, 0.570, 0.570, 0.565], backgroundColor: (ctx) => ctx.dataIndex === 3 ? '#ef4444' : '#3b82f640', borderColor: (ctx) => ctx.dataIndex === 3 ? '#ef4444' : '#3b82f6', borderWidth: 1, borderRadius: 4 }
+        ]
+      },
+      options: { ...chartDefaults, plugins: { ...chartDefaults.plugins, legend: { display: false } }, scales: { ...chartDefaults.scales, y: { ...chartDefaults.scales.y, min: 0.5, max: 0.72 } } }
+    });
+  }
+  if (section === 'measure' && !charts.abc) {
+    charts.abc = new Chart(document.getElementById('abcChart'), {
+      type: 'bar',
+      data: {
+        labels: ['A', 'B', 'C'],
+        datasets: [{ label: 'Revenue %', data: [76.87, 18.09, 5.04], backgroundColor: ['#22c55e', '#f59e0b', '#ef4444'], borderRadius: 6 }]
+      },
+      options: { ...chartDefaults, plugins: { ...chartDefaults.plugins, legend: { display: false } }, scales: { ...chartDefaults.scales, y: { ...chartDefaults.scales.y, ticks: { ...chartDefaults.scales.y.ticks, callback: v => `${v}%` } } } }
+    });
+  }
+}
+
+initCharts('overview');
+</script>
+</body>
+</html>
