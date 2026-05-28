@@ -1,49 +1,38 @@
-# Canadian Fabricated Metal Manufacturing
-## Post-COVID Demand Analysis and Production Planning Implications
+# Supply Chain Portfolio
+### Dhaval Vaghela | Mechanical Engineer | Supply Chain Management Graduate | Six Sigma Yellow Belt
 
-**Dhaval Vaghela** — Mechanical Engineer | Supply Chain Management Graduate | Six Sigma Yellow Belt
+Independent supply chain analyses built using real datasets, Excel, and structured analytical frameworks. Each project uses publicly available data, a defined methodology, and produces findings I can explain.
 
 ---
+
+## Projects
 
 &nbsp;
 
-[![View Live Dashboard](https://img.shields.io/badge/View%20Live%20Dashboard-%233b82f6?style=for-the-badge&logo=googlechrome&logoColor=white)](https://dhavalpvaghela96-coder.github.io/supply-chain-portfolio/SIM4_Dashboard_v2.html)
+### Project 1 — Canadian Fabricated Metal Manufacturing
+Post-COVID demand analysis and production planning implications using Statistics Canada data.
+
+[![View Project](https://img.shields.io/badge/View%20Project-%231e293b?style=for-the-badge&logo=github&logoColor=white)](https://github.com/dhavalpvaghela96-coder/supply-chain-portfolio/tree/main/project-1-fabricated-metal)
+[![Live Dashboard](https://img.shields.io/badge/Live%20Dashboard-%233b82f6?style=for-the-badge&logo=googlechrome&logoColor=white)](https://dhavalpvaghela96-coder.github.io/supply-chain-portfolio/project-1-fabricated-metal/SIM1_Dashboard.html)
+
+**Tools:** Excel, Power Query, Statistics Canada open data
+**Method:** Time-series trend analysis, YoY growth, inventory ratio analysis
 
 &nbsp;
 
 ---
 
-## What This Project Is About
+### Project 2 — Web Camera Late Delivery Risk Investigation
+DMAIC-based inventory analysis to identify why Web Camera has a 58% late delivery risk.
 
-After COVID lockdowns lifted, something unusual happened in Canadian manufacturing. Demand came back faster than anyone expected, but the supply chain could not keep up. This project looks at 10 years of Statistics Canada data to understand exactly what happened, and what it means for production planning decisions today.
+[![View Project](https://img.shields.io/badge/View%20Project-%231e293b?style=for-the-badge&logo=github&logoColor=white)](https://github.com/dhavalpvaghela96-coder/supply-chain-portfolio/tree/main/project-2-web-camera)
+[![Live Dashboard](https://img.shields.io/badge/Live%20Dashboard-%233b82f6?style=for-the-badge&logo=googlechrome&logoColor=white)](https://dhavalpvaghela96-coder.github.io/supply-chain-portfolio/project-2-web-camera/SIM2_Dashboard.html)
 
----
+**Tools:** Excel, Power Query, ABC Classification, Ishikawa Diagram
+**Method:** DMAIC — Define, Measure, Analyze, Improve, Control
 
-## Project Details
-
-| | |
-|---|---|
-| **Data Source** | Statistics Canada, Table 16-10-0047-01 |
-| **Industry** | Fabricated Metal Product Manufacturing, NAICS 332 |
-| **Date Range** | January 2015 to December 2025 |
-| **Dataset Size** | 1,188 rows, 10 metrics per month |
-| **Tools Used** | Excel, Power Query, Pivot Tables |
-| **Methodology** | Time-series trend analysis, YoY growth, unfilled-to-new-orders ratio |
+&nbsp;
 
 ---
 
-## Key Finding
-
-New orders in Canadian fabricated metal manufacturing surged 23% in a single year after COVID. By 2022, unfilled orders had climbed $1 billion above pre-COVID levels and stayed there through 2023. This was not just individual companies making poor decisions. The entire supply chain was collectively overwhelmed. A production planner still using pre-2020 replenishment logic would be systematically under-ordering materials without realising it.
-
----
-
-## What Is Inside This Project
-
-- Interactive dashboard with 5 sections — Overview, Demand Shock, Recovery, Capacity Strain, and Findings
-- Excel workbook with filtered dataset, trend charts, drop and recovery calculations, and summary table
-- Written report covering root cause analysis, recommendations, and limitations
-
----
-
-*Data: Statistics Canada open data — publicly available at statcan.gc.ca*
+*All datasets are publicly available. Analysis and findings are my own.*
