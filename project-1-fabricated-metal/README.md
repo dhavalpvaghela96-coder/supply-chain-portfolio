@@ -7,7 +7,7 @@
 
 &nbsp;
 
-[![View Live Dashboard](https://img.shields.io/badge/View%20Live%20Dashboard-%233b82f6?style=for-the-badge&logo=googlechrome&logoColor=white)](https://dhavalpvaghela96-coder.github.io/supply-chain-portfolio/SIM4_Dashboard_v2.html)
+[![View Dashboard](https://img.shields.io/badge/View%20Dashboard-%233b82f6?style=for-the-badge&logo=googlechrome&logoColor=white)](https://dhavalpvaghela96-coder.github.io/supply-chain-portfolio/project-1-fabricated-metal/SIM1_Dashboard.html)
 
 &nbsp;
 
