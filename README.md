@@ -1,61 +1,49 @@
-## Supply Chain Portfolio – Dhaval Vaghela
+# Canadian Fabricated Metal Manufacturing
+## Post-COVID Demand Analysis and Production Planning Implications
 
-Supply chain and production planning analyses using real Canadian industry data.
-
----
-
-### Simulation 1 – Canadian Fabricated Metal Manufacturing
-**Focus:** Post-COVID demand analysis and production planning implications  
-**Data:** Statistics Canada, NAICS 332, 2015–2025  
-**Tools:** Excel, Statistics Canada open data  
-
-[View Live Dashboard](https://dhavalpvaghela96-coder.github.io/supply-chain-portfolio/SIM4_Dashboard_v2.html)
-
-<img width="1907" height="757" alt="Screenshot 2026-05-12 114105" src="https://github.com/user-attachments/assets/bbca0220-8b3f-490c-ae5a-f1825b12b18f" />
-
-
-Filtered working dataset: Statistics Canada Table 16-10-0047-01, filtered to Fabricated Metal Product Manufacturing [NAICS 332], unadjusted monthly values, 2015 to 2025. Values in thousands of Canadian dollars.
-
-
+**Dhaval Vaghela** — Mechanical Engineer | Supply Chain Management Graduate | Six Sigma Yellow Belt
 
 ---
 
-<img width="1918" height="763" alt="Screenshot 2026-05-12 114304" src="https://github.com/user-attachments/assets/1f605d6e-c490-4848-9030-e4826681e235" />
+&nbsp;
 
+[![View Live Dashboard](https://img.shields.io/badge/View%20Live%20Dashboard-%233b82f6?style=for-the-badge&logo=googlechrome&logoColor=white)](https://dhavalpvaghela96-coder.github.io/supply-chain-portfolio/SIM4_Dashboard_v2.html)
 
-Unfilled Orders trend chart (2015 to 2025) with yearly average calculations. Shows the COVID dip in 2020 and the post-COVID surge where average unfilled orders climbed from $6.6B in 2020 to $8.1B by 2022 and stayed elevated through 2023.
-
-
-
----
-
-
-<img width="1919" height="754" alt="image" src="https://github.com/user-attachments/assets/95c112f3-3afd-4d06-a460-4bbcfb0f2105" /> 
-
-
-New Orders trend chart (2015 to 2025) with COVID impact calculations. New orders dropped 46.8% from the 2019 peak to the 2020 low, then recovered 155.2% by 2022 — the largest swing of all three metrics analyzed.
+&nbsp;
 
 ---
 
+## What This Project Is About
 
-<img width="1908" height="759" alt="image" src="https://github.com/user-attachments/assets/df624aaf-0ab9-4b87-b2c2-61c9f7aa16d4" />
-
-
-Sales (shipments) trend chart (2015 to 2025) with COVID impact calculations. Sales dropped 39.8% from the 2019 peak to the 2020 low, then recovered 115.8% by 2022, surpassing pre-COVID levels entirely.
+After COVID lockdowns lifted, something unusual happened in Canadian manufacturing. Demand came back faster than anyone expected — but the supply chain could not keep up. This project looks at 10 years of Statistics Canada data to understand exactly what happened, and what it means for production planning decisions today.
 
 ---
 
+## Project Details
 
+| | |
+|---|---|
+| **Data Source** | Statistics Canada, Table 16-10-0047-01 |
+| **Industry** | Fabricated Metal Product Manufacturing, NAICS 332 |
+| **Date Range** | January 2015 to December 2025 |
+| **Dataset Size** | 1,188 rows, 10 metrics per month |
+| **Tools Used** | Excel, Power Query, Pivot Tables |
+| **Methodology** | Time-series trend analysis, YoY growth, unfilled-to-new-orders ratio |
 
-<img width="1919" height="757" alt="image" src="https://github.com/user-attachments/assets/a535a108-1098-48db-a848-0cea3783f85c" /> 
+---
 
+## Key Finding
 
-Summary table showing yearly averages for new orders, unfilled orders and sales from 2019 to 2023, with the unfilled-to-new-orders ratio and year-on-year growth calculations. New orders grew 23.2% in 2021 while unfilled orders climbed to $8.1B by 2022 and stayed elevated through 2023.
+New orders in Canadian fabricated metal manufacturing surged 23% in a single year after COVID. By 2022, unfilled orders had climbed $1 billion above pre-COVID levels and stayed there through 2023. This was not just individual companies making poor decisions. The entire supply chain was collectively overwhelmed. A production planner still using pre-2020 replenishment logic would be systematically under-ordering materials without realising it.
 
+---
 
+## What Is Inside This Project
 
+- Interactive dashboard with 5 sections — Overview, Demand Shock, Recovery, Capacity Strain, and Findings
+- Excel workbook with filtered dataset, trend charts, drop and recovery calculations, and summary table
+- Written report covering root cause analysis, recommendations, and limitations
 
+---
 
-
-
-
+*Data: Statistics Canada open data — publicly available at statcan.gc.ca*
