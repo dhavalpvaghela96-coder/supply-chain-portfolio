@@ -36,3 +36,11 @@ DMAIC-based inventory analysis to identify why Web Camera has a 58% late deliver
 ---
 
 *All datasets are publicly available. Analysis and findings are my own.*
+
+### Project 3 — Demand Forecasting and Reorder Point Planning
+
+Demand forecasting and inventory planning using 2 years of daily retail sales data across 5 product categories at Store S001.
+
+[![View Project](https://img.shields.io/badge/🔗-VIEW%20PROJECT-297ef2?style=for-the-badge)](https://docs.google.com/spreadsheets/d/1Gpso31yG27oFcwR4VHd18rR0UakTIPEN/edit?usp=sharing)
+
+**Tools:** Excel, Power Query **Method:** FORECAST.LINEAR, Safety Stock (Z-score), Reorder Point Planning, Scenario Testing
