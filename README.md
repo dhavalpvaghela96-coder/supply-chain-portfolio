@@ -29,7 +29,7 @@ DMAIC-based inventory analysis to identify why Web Camera has a 58% late deliver
 [![Live Dashboard](https://img.shields.io/badge/Live%20Dashboard-%233b82f6?style=for-the-badge&logo=googlechrome&logoColor=white)](https://dhavalpvaghela96-coder.github.io/supply-chain-portfolio/project-2-web-camera/SIM2_Dashboard.html)
 
 **Tools:** Excel, Power Query, ABC Classification, Ishikawa Diagram
-**Method:** DMAIC — Define, Measure, Analyze, Improve, Control
+**Method:** DMAIC
 
 &nbsp;
 
@@ -43,4 +43,4 @@ Demand forecasting and inventory planning using 2 years of daily retail sales da
 
 [![View Project](https://img.shields.io/badge/🔗-VIEW%20PROJECT-297ef2?style=for-the-badge)](https://docs.google.com/spreadsheets/d/1Gpso31yG27oFcwR4VHd18rR0UakTIPEN/edit?usp=sharing)
 
-**Tools:** Excel, Power Query **Method:** FORECAST.LINEAR, Safety Stock (Z-score), Reorder Point Planning, Scenario Testing
+**Tools:** Excel, Power Query **Method:** FORECAST.LINEAR, Safety Stock (Z-score), Reorder Point Planning
