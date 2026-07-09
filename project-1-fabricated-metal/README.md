@@ -34,7 +34,7 @@ After COVID, demand in Canadian manufacturing came back fast but supply chains c
 
 ## Key Finding
 
-New orders in Canadian fabricated metal manufacturing surged 23% in a single year after COVID. By 2022, unfilled orders had climbed $1 billion above pre-COVID levels and stayed there through 2023. This was not just individual companies making poor decisions. The entire supply chain was collectively overwhelmed. A production planner still using pre-2020 replenishment logic would be systematically under-ordering materials without realising it.
+After COVID, new orders in Canadian fabricated metal manufacturing jumped 23% in one year. By 2022, unfilled orders were $1 billion above pre-COVID levels and stayed there through 2023. This was not a company problem, the entire supply chain was overwhelmed. Any production planner still using pre-2020 numbers would be under-ordering materials without even knowing it.
 
 ---
 
