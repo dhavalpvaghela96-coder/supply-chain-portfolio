@@ -15,7 +15,7 @@
 
 ## What This Project Is About
 
-After COVID lockdowns lifted, something unusual happened in Canadian manufacturing. Demand came back faster than anyone expected — but the supply chain could not keep up. This project looks at 10 years of Statistics Canada data to understand exactly what happened, and what it means for production planning decisions today.
+After COVID, demand in Canadian manufacturing came back fast but supply chains couldn't keep up. I used 10 years of Statistics Canada data to understand what actually happened and what it means for production planning today.
 
 ---
 
