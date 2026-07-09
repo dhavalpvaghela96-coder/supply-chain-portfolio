@@ -1,5 +1,8 @@
 # Project 3 :- Demand Forecasting and Reorder Point Planning
 
+[![View Project](https://img.shields.io/badge/🔗-VIEW%20PROJECT-297ef2?style=for-the-badge)](https://docs.google.com/spreadsheets/d/1Gpso31yG27oFcwR4VHd18rR0UakTIPEN/edit?usp=sharing)
+
+
 ## What This Project Is About
 
 I took 2 years of daily retail sales data (73,100 rows, 5 stores, 20 products) and used it to forecast future demand, calculate how much buffer stock each product needs, and figure out at what inventory level a new order should be triggered.
