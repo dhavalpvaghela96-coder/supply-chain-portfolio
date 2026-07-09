@@ -1,4 +1,4 @@
-# Project 3 — Demand Forecasting and Reorder Point Planning
+# Project 3 :- Demand Forecasting and Reorder Point Planning
 
 ## What This Project Is About
 
